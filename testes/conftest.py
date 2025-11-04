@@ -3,10 +3,6 @@
 import sys
 import os
 
-# Usando o caminho relativo direto a partir da pasta 'tests'
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-# Isso adiciona a raiz 'trabalho-N2' ao caminho, permitindo 'import src.produto'
-
 import pytest
 from src.produto import Produto
 from src.estoque import EstoqueRepository

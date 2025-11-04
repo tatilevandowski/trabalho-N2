@@ -1,4 +1,4 @@
-from carrinho import Carrinho
+from src.carrinho import Carrinho
 
 def test_calculo_total_com_promocao_progressiva_desconto_10_porcento(produto_padrao):
     """Teste que deve falhar, pois a funcionalidade não existe."""
