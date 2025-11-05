@@ -1,12 +1,15 @@
 # tests/conftest.py
 
+import pytest
 import sys
 import os
 
-import pytest
 from src.produto import Produto
 from src.estoque import EstoqueRepository
 from unittest.mock import MagicMock
+from src.fatura import Fatura
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 # 1. Fixture de Entidade
 @pytest.fixture(scope="function")

@@ -1,3 +1,29 @@
+# pyproject.toml (CORRIGIDO)
+
 [tool.pytest.ini_options]
-pythonpath = ["src"]
-testpaths = ["src/tests"]
+pythonpath = ["src", "."]
+testpaths = ["testes"]
+python_files = "test_*.py"
+
+# Ignora avisos genéricos (sem quebrar nada)
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning"
+]
+
+# Define marcadores válidos
+markers = [
+    "slow: marca testes de execução lenta"
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "src/__init__.py",
+    "src/exceptions.py",
+    "src/servico_email.py"
+]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true

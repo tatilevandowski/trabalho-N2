@@ -1,0 +1,48 @@
+name: Testes de Software - N2
+
+# Aciona o workflow em todo push para a branch 'main' e em Pull Requests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test_and_coverage:
+    runs-on: ubuntu-latest # Ambiente Linux (mais rápido e padrão para CI)
+    
+    steps:
+      - name: Checkout do Código
+        # Baixa seu código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.x
+        # Configura o ambiente Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x' 
+          cache: 'pip' # Otimiza a instalação das libs
+
+      - name: Instalar Dependências
+        run: |
+          # Instala Pytest, Pytest-Cov e Pytest-Mock (o mesmo que você usou localmente)
+          pip install pytest pytest-cov pytest-mock 
+          
+      - name: Executar Testes e Gerar Relatórios de Cobertura (XML/HTML)
+        # Comando crucial: Roda o Pytest, mede cobertura de linhas e branches, e falha se total for < 80%
+        run: |
+          pytest --cov=src --cov-report html --cov-report xml --cov-fail-under=80 --cov-branch
+
+      - name: 💾 Salvar Relatório HTML de Cobertura como Artefato
+        # Salva o relatório HTML (pasta htmlcov/) para visualização
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-coverage-report
+          path: htmlcov/
+          
+      - name: 💾 Salvar Relatório XML de Cobertura como Artefato
+        # Salva o XML (coverage.xml) que é usado por serviços como Codecov/Coveralls
+        uses: actions/upload-artifact@v4
+        with:
+          name: xml-coverage-report
+          path: coverage.xml
