@@ -3,8 +3,6 @@
 import uuid # Necessário para gerar IDs de fatura
 from .fatura import Fatura
 from .exceptions import CupomInvalidoError, PagamentoRecusadoError, QuantidadeInvalidaError, EstoqueInsuficienteError
-# Certifique-se de que a classe Fatura existe em src/entidades.py ou similar
-# from .entidades import Fatura 
 
 # Helper class para representar um item no carrinho
 class ItemCarrinho:
@@ -20,7 +18,6 @@ class Carrinho:
     - Finalizar compra (com frete e pagamento simulados - Mocks)
     """
     
-    # Única implementação do construtor, injetando todas as dependências (Stubs/Mocks)
     def __init__(self, estoque_repo, frete_api=None, gateway_pagamento=None):
         self.estoque_repo = estoque_repo
         self.frete_api = frete_api 
@@ -54,7 +51,6 @@ class Carrinho:
                     f"Estoque insuficiente para {produto.nome}. Disponível: {estoque_disponivel}"
                 )
 
-            # 3. Chamada ao Stub: Reserva de Estoque (Item 4) - SÓ RESERVA SE HOUVER ESTOQUE
             self.estoque_repo.reservar(produto.id, quantidade)
             
         # 4. Adiciona o Item ao carrinho
@@ -72,7 +68,6 @@ class Carrinho:
         for item in self.itens:
             subtotal = item.produto.preco * item.quantidade
             
-            # Aplica a promoção progressiva (TDD)
             desconto_promocao = self._calcular_desconto_item(item.quantidade)
             
             total_item_com_promocao = subtotal * (1 - desconto_promocao)
