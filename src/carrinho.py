@@ -25,3 +25,22 @@ class Carrinho:
                 
             total += subtotal * (1 - desconto)
         return total
+    
+    def _calcular_desconto_item(self, quantidade):
+        """Nova função para isolar a regra de negócio da promoção."""
+        if quantidade >= 10:
+            return 0.15
+        elif quantidade >= 5:
+            return 0.10
+        return 0.0
+
+    def calcular_total(self):
+        total = 0.0
+        for item in self.itens:
+            subtotal = item.produto.preco * item.quantidade
+            
+            desconto = self._calcular_desconto_item(item.quantidade) # Usando a nova função
+                
+            total += subtotal * (1 - desconto)
+        return total
+        
